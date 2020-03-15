@@ -19,6 +19,8 @@ var keys = map[string]string{
 }
 
 var player Player
+var boulders []*Boulder
+var targets []*Target
 
 func parseLevel(rawLevels []string) [][]string {
 	var maps [][]string
@@ -58,8 +60,8 @@ func loadLevel(file string) ([]string, error) {
 }
 
 func initPlayer(level []string) Player {
-	for y, line := range level {
-		for x, char := range line {
+	for x, line := range level {
+		for y, char := range line {
 			switch char {
 			case '@':
 				return Player{x, y}
@@ -67,6 +69,32 @@ func initPlayer(level []string) Player {
 		}
 	}
 	return Player{}
+}
+
+func initBoulder(level []string) []*Boulder {
+	var boulders []*Boulder
+	for x, line := range level {
+		for y, char := range line {
+			switch char {
+			case '*':
+				boulders = append(boulders, &Boulder{x, y})
+			}
+		}
+	}
+	return boulders
+}
+
+func initTarget(level []string) []*Target {
+	var targets []*Target
+	for x, line := range level {
+		for y, char := range line {
+			switch char {
+			case '.':
+				targets = append(targets, &Target{x, y})
+			}
+		}
+	}
+	return targets
 }
 
 func printLevel(level []string) {
@@ -83,19 +111,28 @@ func printMaps(maps [][]string) {
 	}
 }
 
+var reset = "\x1b[0m"
+var oo = "\x1b[42m" + " " + reset
+
 func printMap(maps [][]string, idx int) {
 	simpleansi.ClearScreen()
 	for _, line := range maps[idx] {
 		for _, chr := range line {
 			switch chr {
 			case 'X':
+				fmt.Print(oo)
+			case '.':
 				fmt.Printf("%c", chr)
-
 			default:
 				fmt.Print(" ")
 			}
 		}
 		fmt.Println()
+	}
+
+	for _, b := range boulders {
+		simpleansi.MoveCursor(b.X, b.Y)
+		fmt.Print("*")
 	}
 	simpleansi.MoveCursor(player.X, player.Y)
 	fmt.Print("@")
@@ -179,29 +216,68 @@ var moves = map[string]func(level []string, x int, y int) (int, int){
 	"right": moveRight,
 }
 
+func hitWall(level []string, x int, y int) bool {
+	return level[x][y] == 'X'
+}
+
 func calculateMove(level []string, fromX int, fromY int, direction string) (toX int, toY int) {
-	toX, toY = moves[direction](level, fromX, fromY)
-	if level[toX][toY] == 'X' {
-		toX = fromX
-		toY = fromY
+	if level == nil {
+		return
+	}
+	if moveFunc, ok := moves[direction]; ok {
+		toX, toY = moveFunc(level, fromX, fromY)
+		if hitWall(level, toX, toY) {
+			toX = fromX
+			toY = fromY
+		}
+		//Move boulder
+		b := getBoulderAtPosition(toX, toY)
+		if b != nil {
+			b.X, b.Y = moveFunc(level, toX, toY)
+			if hitWall(level, b.X, b.Y) {
+				b.X, b.Y = toX, toY
+				toX, toY = fromX, fromY
+			}
+		}
 	}
 	return
 }
 
+func getBoulderAtPosition(x int, y int) *Boulder {
+	for _, cand := range boulders {
+		if cand.X == x && cand.Y == y {
+			fmt.Println(cand)
+			return cand
+		}
+	}
+	return nil
+}
+
+func boulderAtPosition(x int, y int) bool {
+	for _, cand := range boulders {
+		if cand.X == x && cand.Y == y {
+			return true
+		}
+	}
+	return false
+}
+
 func movePlayer(level []string, dir string) {
-	fmt.Println(player)
-	fmt.Println(dir)
-	player.X, player.Y = calculateMove(level, player.X, player.Y, dir)
+	if level != nil {
+		player.X, player.Y = calculateMove(level, player.X, player.Y, dir)
+	}
 }
 
 func main() {
 	initialise()
 	allLevels, _ := loadLevel("levels/maps.txt")
 	defer cleanup()
-	startLevel := 0
+	startLevel := 4
 	maps := parseLevel(allLevels)
 	level := maps[startLevel]
 	player = initPlayer(level)
+	targets = initTarget(level)
+	boulders = initBoulder(level)
 	fmt.Println("Player reports for duty ", player)
 	// game loop
 	for {
