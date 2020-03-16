@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 
 	"github.com/danicat/simpleansi"
 )
@@ -120,7 +121,7 @@ func printMap(maps [][]string, idx int) {
 		for _, chr := range line {
 			switch chr {
 			case 'X':
-				fmt.Print(oo)
+				fmt.Print(simpleansi.WithBackground(" ", "GREEN"))
 			case '.':
 				fmt.Printf("%c", chr)
 			default:
@@ -216,8 +217,24 @@ var moves = map[string]func(level []string, x int, y int) (int, int){
 	"right": moveRight,
 }
 
+func isPositionOfOccupied(level []string, x int, y int, positionMarker byte) bool {
+	if positionMarker == '*' {
+		b := getBoulderAtPosition(x, y)
+		if b != nil {
+			return true
+		}
+		return false
+	}
+	return level[x][y] == positionMarker
+
+}
+
 func hitWall(level []string, x int, y int) bool {
-	return level[x][y] == 'X'
+	return isPositionOfOccupied(level, x, y, 'X')
+}
+
+func isPositionOccupied(level []string, x int, y int) bool {
+	return hitWall(level, x, y) || isPositionOfOccupied(level, x, y, '*')
 }
 
 func calculateMove(level []string, fromX int, fromY int, direction string) (toX int, toY int) {
@@ -233,10 +250,12 @@ func calculateMove(level []string, fromX int, fromY int, direction string) (toX 
 		//Move boulder
 		b := getBoulderAtPosition(toX, toY)
 		if b != nil {
-			b.X, b.Y = moveFunc(level, toX, toY)
-			if hitWall(level, b.X, b.Y) {
+			candX, candY := moveFunc(level, toX, toY)
+			if isPositionOccupied(level, candX, candY) {
 				b.X, b.Y = toX, toY
 				toX, toY = fromX, fromY
+			} else {
+				b.X, b.Y = candX, candY
 			}
 		}
 	}
@@ -246,7 +265,6 @@ func calculateMove(level []string, fromX int, fromY int, direction string) (toX 
 func getBoulderAtPosition(x int, y int) *Boulder {
 	for _, cand := range boulders {
 		if cand.X == x && cand.Y == y {
-			fmt.Println(cand)
 			return cand
 		}
 	}
@@ -268,16 +286,37 @@ func movePlayer(level []string, dir string) {
 	}
 }
 
-func main() {
-	initialise()
-	allLevels, _ := loadLevel("levels/maps.txt")
-	defer cleanup()
-	startLevel := 4
+func matchBoulderToTarget(b *Boulder, t *Target) bool {
+	return b.X == t.X && b.Y == t.Y
+}
+
+func isLevelCompleted() bool {
+	c := 0
+	for _, b := range boulders {
+		for _, t := range targets {
+			if matchBoulderToTarget(b, t) {
+				c++
+			}
+		}
+	}
+	return c == len(boulders)
+}
+
+func initLevel(allLevels []string, startLevel int) ([][]string, []string) {
 	maps := parseLevel(allLevels)
 	level := maps[startLevel]
 	player = initPlayer(level)
 	targets = initTarget(level)
 	boulders = initBoulder(level)
+	return maps, level
+}
+
+func main() {
+	initialise()
+	allLevels, _ := loadLevel("levels/maps.txt")
+	defer cleanup()
+	startLevel := 0
+	maps, level := initLevel(allLevels, startLevel)
 	fmt.Println("Player reports for duty ", player)
 	// game loop
 	for {
@@ -291,12 +330,20 @@ func main() {
 		// process movement
 		movePlayer(level, input)
 
-		// process collisions
-
 		// check game over
 		if input == "ESC" {
 			break
 		}
+
+		// is completed
+
+		if isLevelCompleted() {
+			fmt.Println("Level completed")
+			startLevel++
+			maps, level = initLevel(allLevels, startLevel)
+		}
+
 		// repeat
+		time.Sleep(100 * time.Millisecond)
 	}
 }

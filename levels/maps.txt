@@ -1,4 +1,4 @@
-*************************************
+
 Maze: 0
 File offset: 148C, DS:00FC, table offset: 0000
 Size X: 22
@@ -18,7 +18,7 @@ XXXXX XXXX X XXXX    X
     X      XXX  XXXXXX
     XXXXXXXX          
 
-*************************************
+
 Maze: 1
 File offset: 148C, DS:00FC, table offset: 0000
 Size X: 22
@@ -38,7 +38,7 @@ XXXXX XXXX X@XXXX  ..X
     X      XXX  XXXXXX
     XXXXXXXX          
 
-*************************************
+
 Maze: 2
 File offset: 14BE, DS:012E, table offset: 0032
 Size X: 14
@@ -57,7 +57,7 @@ XXXXXX XX* * X
   X    X     X
   XXXXXXXXXXXX
 
-*************************************
+
 Maze: 3
 File offset: 14E9, DS:0159, table offset: 005D
 Size X: 17
@@ -76,7 +76,7 @@ XX...    *  *   X
 X....  XXXXXXXXXX
 XXXXXXXX         
 
-*************************************
+
 Maze: 4
 File offset: 150E, DS:017E, table offset: 0082
 Size X: 22
@@ -98,7 +98,7 @@ X **X** @X
 X   X   XX            
 XXXXXXXXX             
 
-*************************************
+
 Maze: 5
 File offset: 154E, DS:01BE, table offset: 00C2
 Size X: 17
@@ -120,7 +120,7 @@ XXXXXXXXX  *  XX
           X    X 
           XXXXXX 
 
-*************************************
+
 Maze: 6
 File offset: 1581, DS:01F1, table offset: 00F5
 Size X: 12
@@ -140,7 +140,7 @@ XXXX * X*  X
    X  XX   X
    XXXXXXXXX
 
-*************************************
+
 Maze: 7
 File offset: 15AD, DS:021D, table offset: 0121
 Size X: 13
@@ -161,7 +161,7 @@ X ** X X...X
 X  XXX XXXXX 
 XXXX         
 
-*************************************
+
 Maze: 8
 File offset: 15D9, DS:0249, table offset: 014D
 Size X: 16
@@ -187,7 +187,7 @@ XX  *    * * * X
   X......X      
   XXXXXXXX      
 
-*************************************
+
 Maze: 9
 File offset: 161B, DS:028B, table offset: 018F
 Size X: 17
@@ -214,7 +214,7 @@ XXXXXX ** * XXXXX
         X  X     
         XXXX     
 
-*************************************
+
 Maze: 10
 File offset: 165E, DS:02CE, table offset: 01D2
 Size X: 21
@@ -243,7 +243,7 @@ XXX   X  *    X.....X
     X           X    
     XXXXXXXXXXXXX    
 
-*************************************
+
 Maze: 11
 File offset: 16BF, DS:032F, table offset: 0233
 Size X: 19
@@ -267,7 +267,7 @@ X...X.X
 X.....X            
 XXXXXXX            
 
-*************************************
+
 Maze: 12
 File offset: 1700, DS:0370, table offset: 0274
 Size X: 13
@@ -292,7 +292,7 @@ XX * * * * XX
  X  XXXXX  X 
  XXXX   XXXX 
 
-*************************************
+
 Maze: 13
 File offset: 1742, DS:03B2, table offset: 02B6
 Size X: 20
@@ -314,7 +314,7 @@ XX **  *   *  *... X
  X   X    XXXXXXXXXX
  XXXXX              
 
-*************************************
+
 Maze: 14
 File offset: 178E, DS:03FE, table offset: 0302
 Size X: 17
@@ -336,7 +336,7 @@ XXXXX   XX XX...X
         X     X  
         XXXXXXX  
 
-*************************************
+
 Maze: 15
 File offset: 17C8, DS:0438, table offset: 033C
 Size X: 17
@@ -362,7 +362,7 @@ X  X     X
 XXXXXX   X       
      XXXXX       
 
-*************************************
+
 Maze: 16
 File offset: 1810, DS:0480, table offset: 0384
 Size X: 14
@@ -386,7 +386,7 @@ XXX@ X*    XX
   X  X        
   XXXX        
 
-*************************************
+
 Maze: 17
 File offset: 184F, DS:04BF, table offset: 03C3
 Size X: 18
@@ -411,7 +411,7 @@ XXXXX     *   X X
       XXXXXXXX  X 
              XXXX 
 
-*************************************
+
 Maze: 18
 File offset: 1896, DS:0506, table offset: 040A
 Size X: 22
@@ -433,7 +433,7 @@ XXXX*XXX*X *  X   X XX
  XXXXXXXXXXXXXXXXX  X 
                  XXXX 
 
-*************************************
+
 Maze: 19
 File offset: 18DD, DS:054D, table offset: 0451
 Size X: 28
@@ -462,7 +462,7 @@ XX    XX              X....X
   X  X             XXXXX  XX
   XXXX                 XXXX 
 
-*************************************
+
 Maze: 20
 File offset: 1952, DS:05C2, table offset: 04C6
 Size X: 20
@@ -491,7 +491,7 @@ XXXX  XX   X    X  X
      X          X   
      XXXXXXXXXXXX   
 
-*************************************
+
 Maze: 21
 File offset: 19B8, DS:0628, table offset: 052C
 Size X: 16
@@ -514,7 +514,7 @@ XXXX XX XXXXXXX
    X    X       
    XXXXXX       
 
-*************************************
+
 Maze: 22
 File offset: 19F2, DS:0662, table offset: 0566
 Size X: 22
@@ -543,7 +543,7 @@ XX X     * * * *   XXX
        X   XXXXXXXXXXX
        XXXXX          
 
-*************************************
+
 Maze: 23
 File offset: 1A67, DS:06D7, table offset: 05DB
 Size X: 25
@@ -566,7 +566,7 @@ XXXXXXXX  X**X*  X
        XXXX  XXXXX       
           XXXX           
 
-*************************************
+
 Maze: 24
 File offset: 1AB8, DS:0728, table offset: 062C
 Size X: 21
@@ -594,7 +594,7 @@ XXXXX    X XX X XX XX
       XX  X  X  X    
        XXXXXXXXXX    
 
-*************************************
+
 Maze: 25
 File offset: 1B20, DS:0790, table offset: 0694
 Size X: 23
@@ -620,7 +620,7 @@ X XXXXXX*XXXXXX  XXXXXX
 X        X    X  X     
 XXXXXXXXXX    XXXX     
 
-*************************************
+
 Maze: 26
 File offset: 1B7D, DS:07ED, table offset: 06F1
 Size X: 15
@@ -644,7 +644,7 @@ XXXX  *** *X  X
      XX   XXXXX
       XXXXX    
 
-*************************************
+
 Maze: 27
 File offset: 1BBC, DS:082C, table offset: 0730
 Size X: 23
@@ -666,7 +666,7 @@ XXXXXXXXX *  * X X  XXX
  XXXXXXX  @ XX      XXX
        XXXXXX          
 
-*************************************
+
 Maze: 28
 File offset: 1C0C, DS:087C, table offset: 0780
 Size X: 15
@@ -692,7 +692,7 @@ XXX .X....XXXXX
   X....   ..X  
   XXXXXXXXXXX  
 
-*************************************
+
 Maze: 29
 File offset: 1C55, DS:08C5, table offset: 07C9
 Size X: 24
@@ -712,7 +712,7 @@ X..XXXXXX  *  X  XXXX XX
 XXXX    X   XXX    @  X 
         XXXXXXXXXXXXXXX 
 
-*************************************
+
 Maze: 30
 File offset: 1C97, DS:0907, table offset: 080B
 Size X: 14
@@ -741,7 +741,7 @@ X.....*   X  X
 XX  XXXXXXXXXX
  XXXX         
 
-*************************************
+
 Maze: 31
 File offset: 1CE4, DS:0954, table offset: 0858
 Size X: 15
@@ -762,7 +762,7 @@ XX  X  ** X   X
       X      XX
       XXXXXXXX 
 
-*************************************
+
 Maze: 32
 File offset: 1D17, DS:0987, table offset: 088B
 Size X: 18
@@ -787,7 +787,7 @@ XX  XXX  XXX* X
    X...X          
    XXXXX          
 
-*************************************
+
 Maze: 33
 File offset: 1D61, DS:09D1, table offset: 08D5
 Size X: 13
@@ -811,7 +811,7 @@ XXXX XX   *X
       X  X   
       XXXX   
 
-*************************************
+
 Maze: 34
 File offset: 1D98, DS:0A08, table offset: 090C
 Size X: 12
@@ -835,7 +835,7 @@ XX....X  * X
 XXX..XX    X
 XXXXXXXXXXXX
 
-*************************************
+
 Maze: 35
 File offset: 1DCC, DS:0A3C, table offset: 0940
 Size X: 20
@@ -860,7 +860,7 @@ XX XX XXX *  X
  X    X X    X      
  XXXXXX XXXXXX      
 
-*************************************
+
 Maze: 36
 File offset: 1E21, DS:0A91, table offset: 0995
 Size X: 18
@@ -888,7 +888,7 @@ XX*X* XXXX*XXXX..X
  X   X XXXXXX     
  XXXXX            
 
-*************************************
+
 Maze: 37
 File offset: 1E7F, DS:0AEF, table offset: 09F3
 Size X: 21
@@ -912,7 +912,7 @@ XXX    X   X*  X *XXX
     XXXXX@XXXXX      
         XXX          
 
-*************************************
+
 Maze: 38
 File offset: 1ED1, DS:0B41, table offset: 0A45
 Size X: 14
@@ -936,7 +936,7 @@ XX XXX  *    X
    X  XXXXX   
    XXXX       
 
-*************************************
+
 Maze: 39
 File offset: 1F12, DS:0B82, table offset: 0A86
 Size X: 23
@@ -963,7 +963,7 @@ X    X  ** X
 XXXXXX   XXX           
      XXXXX             
 
-*************************************
+
 Maze: 40
 File offset: 1F74, DS:0BE4, table offset: 0AE8
 Size X: 11
@@ -983,7 +983,7 @@ XX*X...X X
  X  XXXXXXX
  XXXX      
 
-*************************************
+
 Maze: 41
 File offset: 1F9B, DS:0C0B, table offset: 0B0F
 Size X: 20
@@ -1007,7 +1007,7 @@ XXXXXXXXXXXXXX  *  X
              XX  XXX
               XXXX  
 
-*************************************
+
 Maze: 42
 File offset: 1FDF, DS:0C4F, table offset: 0B53
 Size X: 13
@@ -1034,7 +1034,7 @@ XX X....X**X
     X    X   
     XXXXXX   
 
-*************************************
+
 Maze: 43
 File offset: 2023, DS:0C93, table offset: 0B97
 Size X: 17
@@ -1059,7 +1059,7 @@ X....   X
 X....   X        
 XXXXXXXXX        
 
-*************************************
+
 Maze: 44
 File offset: 206C, DS:0CDC, table offset: 0BE0
 Size X: 25
@@ -1087,7 +1087,7 @@ XX XXX      XXXX X*X X  X
              XX  XXX  XX 
               XXXXXXXXX  
 
-*************************************
+
 Maze: 45
 File offset: 20DE, DS:0D4E, table offset: 0C52
 Size X: 19
@@ -1107,7 +1107,7 @@ X...X  XXX  *  *  X
 XXXXXXXX XX   X   X
           XXXXXXXXX
 
-*************************************
+
 Maze: 46
 File offset: 2115, DS:0D85, table offset: 0C89
 Size X: 22
@@ -1133,7 +1133,7 @@ XXXXXX X  X*   XXX...X
  XXXXX  X   X         
      XXXXXXXX         
 
-*************************************
+
 Maze: 47
 File offset: 2174, DS:0DE4, table offset: 0CE8
 Size X: 19
@@ -1157,7 +1157,7 @@ XXXXXX  XXX  ...  X
           X       X
           XXXXXXXXX
 
-*************************************
+
 Maze: 48
 File offset: 21B6, DS:0E26, table offset: 0D2A
 Size X: 16
@@ -1181,7 +1181,7 @@ XXX  XXXX XXX X
        X  XX   X
        XXXXXXXXX
 
-*************************************
+
 Maze: 49
 File offset: 21F5, DS:0E65, table offset: 0D69
 Size X: 19
@@ -1206,7 +1206,7 @@ XXX**   X X X X X
   X  X      X    XX
   XXXX      XXXXXX 
 
-*************************************
+
 Maze: 50
 File offset: 224D, DS:0EBD, table offset: 0DC1
 Size X: 21
@@ -1231,7 +1231,7 @@ XXXXX  X  XX  X *X  X
   X.......XXXXXXX  XX
   XXXXXXXXX     XXXX 
 
-*************************************
+
 Maze: 51
 File offset: 22A8, DS:0F18, table offset: 0E1C
 Size X: 16
@@ -1254,7 +1254,7 @@ X  XXXXXX  XXX
 X XX    XXXX    
 XXX             
 
-*************************************
+
 Maze: 52
 File offset: 22EB, DS:0F5B, table offset: 0E5F
 Size X: 21
@@ -1277,7 +1277,7 @@ X..  * XXXXX
 X  X @ X             
 XXXXXXXX             
 
-*************************************
+
 Maze: 53
 File offset: 2333, DS:0FA3, table offset: 0EA7
 Size X: 13
@@ -1305,7 +1305,7 @@ X *      *  X
 X  XX   X   X
 XXXXXXXXXXXXX
 
-*************************************
+
 Maze: 54
 File offset: 2383, DS:0FF3, table offset: 0EF7
 Size X: 23
@@ -1334,7 +1334,7 @@ X  * ** XXXX *  * X X X
 X          X   X      X
 XXXXXXXXXXXXXXXXXXXXXXX
 
-*************************************
+
 Maze: 55
 File offset: 23F9, DS:1069, table offset: 0F6D
 Size X: 22
@@ -1358,7 +1358,7 @@ XX     X *  * XX   X
  XXXXX   X   XXXXXXX  
      XXXXXXXXX        
 
-*************************************
+
 Maze: 56
 File offset: 2451, DS:10C1, table offset: 0FC5
 Size X: 14
@@ -1383,7 +1383,7 @@ XXX*  **X  XXX
   X.......X   
   XXXXXXXXX   
 
-*************************************
+
 Maze: 57
 File offset: 248C, DS:10FC, table offset: 1000
 Size X: 18
@@ -1403,7 +1403,7 @@ XXX*       XXXXXXX
   X  XXXXXXX      
   XXXX            
 
-*************************************
+
 Maze: 58
 File offset: 24BE, DS:112E, table offset: 1032
 Size X: 27
@@ -1432,7 +1432,7 @@ XXXX X  *X X              X
    XX  XXX  XXXXXXXX       
     XXXX                   
 
-*************************************
+
 Maze: 59
 File offset: 2543, DS:11B3, table offset: 10B7
 Size X: 29
@@ -1461,7 +1461,7 @@ X    * XXXX   X ....&.XXX
 X   X  X  X  X  ..&.XXX      
 XXXXXXXX  XXXXXXXXXXX        
 
-*************************************
+
 Maze: 60
 File offset: 25DB, DS:124B, table offset: 114F
 Size X: 26
@@ -1486,4 +1486,3 @@ X **                  &.XX
 X  XXXXXXXXXXXXXXXXXX  ..X
 XXXX                XXXXXX
 
-*************************************
