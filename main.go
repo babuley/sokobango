@@ -1,42 +1,25 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"time"
 
 	"github.com/danicat/simpleansi"
+	"github.com/google/uuid"
 )
 
-var keys = map[string]string{
-	"A": "up",
-	"B": "down",
-	"C": "right",
-	"D": "left",
+var keys = map[string]Move{
+	"A": up,
+	"B": down,
+	"C": right,
+	"D": left,
 }
 
 var player Player
 var boulders []*Boulder
 var targets []*Target
-
-func loadLevel(file string) ([]string, error) {
-	var level []string
-	f, err := os.Open(file)
-	if err != nil {
-		return level, err
-	}
-	defer f.Close()
-
-	scan := bufio.NewScanner(f)
-	for scan.Scan() {
-		line := scan.Text()
-		level = append(level, line)
-	}
-	return level, nil
-}
 
 func initPlayer(level []string) Player {
 	for x, line := range level {
@@ -56,7 +39,7 @@ func initBoulder(level []string) []*Boulder {
 		for y, char := range line {
 			switch char {
 			case '*':
-				boulders = append(boulders, &Boulder{x, y})
+				boulders = append(boulders, &Boulder{x, y, uuid.New()})
 			}
 		}
 	}
@@ -69,7 +52,7 @@ func initTarget(level []string) []*Target {
 		for y, char := range line {
 			switch char {
 			case '.':
-				targets = append(targets, &Target{x, y})
+				targets = append(targets, &Target{x, y, uuid.New()})
 			}
 		}
 	}
@@ -99,7 +82,7 @@ func printMap(maps [][]string, idx int) {
 		for _, chr := range line {
 			switch chr {
 			case 'X':
-				fmt.Print(simpleansi.WithBackground(" ", "GREEN"))
+				fmt.Print(simpleansi.WithBackground(" ", simpleansi.GREEN))
 			case '.':
 				fmt.Printf("%c", chr)
 			default:
@@ -118,47 +101,11 @@ func printMap(maps [][]string, idx int) {
 	simpleansi.MoveCursor(len(maps[idx])+1, 0)
 }
 
-func recoverFatal(msg string, err error) {
-	if err != nil {
-		log.Fatalln("Error activating cbreak mode:", err)
-	}
-}
-
-func runTerminal(term *exec.Cmd) error {
-	term.Stdin = os.Stdin
-	return term.Run()
-}
-
-func initCooked() func() *exec.Cmd {
-	return func() *exec.Cmd {
-		return exec.Command("stty", "cbreak", "-echo")
-	}
-}
-
-func initCBreak() func() *exec.Cmd {
-	return func() *exec.Cmd {
-		return exec.Command("stty", "-cbreak", "echo")
-	}
-}
-
-func initialise() {
-	cbTerm := initCooked()()
-	err := runTerminal(cbTerm)
-	recoverFatal("Error activating cbreak mode:", err)
-}
-
-func cleanup() {
-	cookedTerm := initCBreak()()
-	err := runTerminal(cookedTerm)
-	recoverFatal("Error activating cooked mode:", err)
-}
-
 func readInput() (string, error) {
 	buffer := make([]byte, 100)
 	cnt, err := os.Stdin.Read(buffer)
 	if err != nil {
 		return "", err
-
 	}
 	if cnt == 1 && buffer[0] == 0x1b {
 		return "ESC", nil
@@ -166,7 +113,7 @@ func readInput() (string, error) {
 
 	if cnt >= 3 {
 		if buffer[0] == 0x1b && buffer[1] == '[' {
-			return keys[string(buffer[2])], nil
+			return string(buffer[2]), nil
 		}
 	}
 	return "", nil
@@ -188,11 +135,21 @@ func moveLeft(level []string, x int, y int) (int, int) {
 	return x, y - 1
 }
 
-var moves = map[string]func(level []string, x int, y int) (int, int){
-	"up":    moveUp,
-	"down":  moveDown,
-	"left":  moveLeft,
-	"right": moveRight,
+type Move int
+
+const (
+	up Move = iota
+	down
+	left
+	right
+	none
+)
+
+var moves = map[Move]func(level []string, x int, y int) (int, int){
+	up:    moveUp,
+	down:  moveDown,
+	left:  moveLeft,
+	right: moveRight,
 }
 
 func isPositionOfOccupied(level []string, x int, y int, positionMarker byte) bool {
@@ -204,7 +161,6 @@ func isPositionOfOccupied(level []string, x int, y int, positionMarker byte) boo
 		return false
 	}
 	return level[x][y] == positionMarker
-
 }
 
 func hitWall(level []string, x int, y int) bool {
@@ -215,7 +171,7 @@ func isPositionOccupied(level []string, x int, y int) bool {
 	return hitWall(level, x, y) || isPositionOfOccupied(level, x, y, '*')
 }
 
-func calculateMove(level []string, fromX int, fromY int, direction string) (toX int, toY int) {
+func calculateMove(level []string, fromX int, fromY int, direction Move) (toX int, toY int) {
 	if level == nil {
 		return
 	}
@@ -258,7 +214,7 @@ func boulderAtPosition(x int, y int) bool {
 	return false
 }
 
-func movePlayer(level []string, dir string) {
+func movePlayer(level []string, dir Move) {
 	if level != nil {
 		player.X, player.Y = calculateMove(level, player.X, player.Y, dir)
 	}
@@ -290,9 +246,9 @@ func initLevel(allLevels []string, startLevel int) ([][]string, []string) {
 }
 
 func main() {
-	initialise()
+	Initialise()
 	allLevels, _ := LoadLevel("levels/maps.txt")
-	defer cleanup()
+	defer Cleanup()
 	startLevel := 0
 	maps, level := initLevel(allLevels, startLevel)
 
@@ -317,7 +273,7 @@ func main() {
 			if evt == "ESC" {
 				exit = true
 			}
-			movePlayer(level, evt)
+			movePlayer(level, keys[evt])
 		default:
 		}
 
