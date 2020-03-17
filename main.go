@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"strings"
 	"time"
 
 	"github.com/danicat/simpleansi"
@@ -22,27 +21,6 @@ var keys = map[string]string{
 var player Player
 var boulders []*Boulder
 var targets []*Target
-
-func parseLevel(rawLevels []string) [][]string {
-	var maps [][]string
-	var mapa []string
-	var lidx int
-	for _, line := range rawLevels {
-		if strings.Contains(line, "Maze") {
-			if len(mapa) > 0 {
-				mapa = mapa[:len(mapa)]
-				maps = append(maps, mapa)
-				mapa = []string{}
-			}
-			lidx = 0
-		}
-		if lidx > 6 {
-			mapa = append(mapa, line)
-		}
-		lidx++
-	}
-	return maps
-}
 
 func loadLevel(file string) ([]string, error) {
 	var level []string
@@ -303,7 +281,7 @@ func isLevelCompleted() bool {
 }
 
 func initLevel(allLevels []string, startLevel int) ([][]string, []string) {
-	maps := parseLevel(allLevels)
+	maps := ParseLevel(allLevels)
 	level := maps[startLevel]
 	player = initPlayer(level)
 	targets = initTarget(level)
@@ -313,30 +291,43 @@ func initLevel(allLevels []string, startLevel int) ([][]string, []string) {
 
 func main() {
 	initialise()
-	allLevels, _ := loadLevel("levels/maps.txt")
+	allLevels, _ := LoadLevel("levels/maps.txt")
 	defer cleanup()
 	startLevel := 0
 	maps, level := initLevel(allLevels, startLevel)
-	fmt.Println("Player reports for duty ", player)
+
+	input := make(chan string)
+	go func(ch chan<- string) {
+		for {
+			input, err := readInput()
+			if err != nil {
+				log.Println("Error reading input:", err)
+				ch <- "ESC"
+			}
+			ch <- input
+		}
+	}(input)
+	exit := false
 	// game loop
 	for {
-		printMap(maps, startLevel)
-		input, err := readInput()
-		if err != nil {
-			log.Println("Error reading input:", err)
-			break
-		}
 
 		// process movement
-		movePlayer(level, input)
+		select {
+		case evt := <-input:
+			if evt == "ESC" {
+				exit = true
+			}
+			movePlayer(level, evt)
+		default:
+		}
 
-		// check game over
-		if input == "ESC" {
+		printMap(maps, startLevel)
+
+		if exit {
 			break
 		}
 
 		// is completed
-
 		if isLevelCompleted() {
 			fmt.Println("Level completed")
 			startLevel++
