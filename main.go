@@ -20,6 +20,13 @@ var keys = map[string]Move{
 var player Player
 var boulders []*Boulder
 var targets []*Target
+var flightRecorder PairStack
+
+func initBlackbox() *PairStack {
+	flightRecorder = PairStack{}
+	flightRecorder.New()
+	return &flightRecorder
+}
 
 func initPlayer(level []string) Player {
 	for x, line := range level {
@@ -107,8 +114,13 @@ func readInput() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if cnt == 1 && buffer[0] == 0x1b {
-		return "ESC", nil
+	if cnt == 1 {
+		if buffer[0] == 0x1b {
+			return "ESC", nil
+		}
+		if buffer[0] == 0x7f {
+			return "BACKSPACE", nil
+		}
 	}
 
 	if cnt >= 3 {
@@ -192,8 +204,19 @@ func calculateMove(level []string, fromX int, fromY int, direction Move) (toX in
 				b.X, b.Y = candX, candY
 			}
 		}
+		recordFlight(toX, toY, b)
+
 	}
 	return
+}
+
+func recordFlight(pX int, pY int, b *Boulder) {
+	p := Player{pX, pY}
+	var t Boulder
+	if b != nil {
+		t = Boulder{b.X, b.Y, b.ID}
+	}
+	flightRecorder.Push(Pair{p, t})
 }
 
 func getBoulderAtPosition(x int, y int) *Boulder {
@@ -220,6 +243,25 @@ func movePlayer(level []string, dir Move) {
 	}
 }
 
+func moveBack(pair *Pair) {
+	if pair != nil {
+		player.X, player.Y = pair.P.X, pair.P.Y
+		b := getBoulderByID(pair.B.ID)
+		if b != nil {
+			b.X, b.Y = pair.B.X, pair.B.Y
+		}
+	}
+}
+
+func getBoulderByID(id uuid.UUID) *Boulder {
+	for _, cand := range boulders {
+		if cand.ID == id {
+			return cand
+		}
+	}
+	return nil
+}
+
 func matchBoulderToTarget(b *Boulder, t *Target) bool {
 	return b.X == t.X && b.Y == t.Y
 }
@@ -242,6 +284,7 @@ func initLevel(allLevels []string, startLevel int) ([][]string, []string) {
 	player = initPlayer(level)
 	targets = initTarget(level)
 	boulders = initBoulder(level)
+	initBlackbox()
 	return maps, level
 }
 
@@ -273,7 +316,12 @@ func main() {
 			if evt == "ESC" {
 				exit = true
 			}
-			movePlayer(level, keys[evt])
+			if evt == "BACKSPACE" {
+				moveBack(flightRecorder.Pop())
+			}
+			if dirMove, ok := keys[evt]; ok {
+				movePlayer(level, dirMove)
+			}
 		default:
 		}
 
