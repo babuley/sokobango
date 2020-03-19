@@ -1,5 +1,6 @@
 # sokobango
 Sokoban game in golang
+
 Inspired by https://github.com/danicat/pacgo
 
 Features:
