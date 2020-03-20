@@ -8,6 +8,7 @@ import (
 
 	"github.com/danicat/simpleansi"
 	"github.com/google/uuid"
+	"github.com/markbates/pkger"
 )
 
 var keys = map[string]Move{
@@ -290,7 +291,8 @@ func initLevel(allLevels []string, startLevel int) ([][]string, []string) {
 
 func main() {
 	Initialise()
-	allLevels, _ := LoadLevel("levels/maps.txt")
+	pkger.Include("/levels/maps.txt")
+	allLevels, _ := LoadLevel("/levels/maps.txt")
 	defer Cleanup()
 	startLevel := 0
 	maps, level := initLevel(allLevels, startLevel)

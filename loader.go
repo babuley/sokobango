@@ -2,8 +2,9 @@ package main
 
 import (
 	"bufio"
-	"os"
 	"strings"
+
+	"github.com/markbates/pkger"
 )
 
 //ParseLevel - processing a set of maps and splitting into levels
@@ -31,7 +32,8 @@ func ParseLevel(rawLevels []string) [][]string {
 //LoadLevel - loading all the maps from a file
 func LoadLevel(file string) ([]string, error) {
 	var level []string
-	f, err := os.Open(file)
+
+	f, err := pkger.Open(file)
 	if err != nil {
 		return level, err
 	}
